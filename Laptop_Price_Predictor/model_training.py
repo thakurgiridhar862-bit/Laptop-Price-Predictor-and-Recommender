@@ -95,13 +95,13 @@ def model_evaluation(y_test, y_pred):
     print(f"R2   : {r2:.4f}")
 
 
-def save_model(model):
+def save_model_and_columns(model, X):
     os.makedirs("Laptop_Price_Predictor/models", exist_ok=True)
 
     joblib.dump(model, "Laptop_Price_Predictor/models/laptop_price_model.pkl")
+    joblib.dump(X.columns.tolist(), "Laptop_Price_Predictor/models/model_columns.pkl")
 
-    print("\nModel saved successfully!")
-    print("Path: Laptop_Price_Predictor/models/laptop_price_model.pkl")
+    print("\nModel and columns saved successfully!")
 
 
 def main():
@@ -114,7 +114,7 @@ def main():
     model, y_pred = train_model(X_train, X_test, Y_train)
 
     model_evaluation(Y_test, y_pred)
-    save_model(model)
+    save_model_and_columns(model, X)
 
 
 if __name__ == "__main__":
