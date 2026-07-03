@@ -184,7 +184,7 @@ def Ram_analysis(df):
 
 def storage_analysis(df):
 
-    print("\nSTORAGE Type ANALYSIS")
+    print("\nSTORAGE TYPE ANALYSIS")
     print("-" * 50)
 
     print(f"Total Storage Type Variants : {df['Storage_Type'].nunique()}")
@@ -222,6 +222,44 @@ def storage_analysis(df):
     )
 
 
+def cpu_analysis(df):
+
+    print("\nCPU TYPE ANALYSIS")
+    print("-" * 50)
+
+    print(f"Total CPU Type Variants : {df['CPU'].nunique()}")
+
+    print("\nCPU Type Counts")
+    print("-" * 50)
+    cpu_count = df["CPU"].value_counts()
+    print(cpu_count)
+
+    # Graph
+    plt.figure(figsize=(16, 5))
+    plt.title("Top 10 Most Common CPUs")
+    plt.xlabel("CPU Type")
+    plt.ylabel("Number of Laptops")
+    plt.grid(axis="y", alpha=0.3)
+
+    X = cpu_count.head(10).index
+    Y = cpu_count.head(10).values
+
+    ax = sns.barplot(
+        x=X,
+        y=Y,
+        palette="coolwarm",
+    )
+
+    for container in ax.containers:
+        ax.bar_label(container, padding=5)
+
+    plt.savefig(
+        "Laptop_Price_Predictor/graphs/top10_common_cpus.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+
+
 def main():
     df = load_data()
     data_overview(df)
@@ -230,6 +268,7 @@ def main():
     brand_analysis(df)
     Ram_analysis(df)
     storage_analysis(df)
+    cpu_analysis(df)
 
 
 if __name__ == "__main__":
