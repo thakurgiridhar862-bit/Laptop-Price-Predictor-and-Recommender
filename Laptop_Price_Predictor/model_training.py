@@ -3,6 +3,8 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.linear_model import LinearRegression
+import joblib
+import os
 
 
 def load_data():
@@ -93,6 +95,15 @@ def model_evaluation(y_test, y_pred):
     print(f"R2   : {r2:.4f}")
 
 
+def save_model(model):
+    os.makedirs("Laptop_Price_Predictor/models", exist_ok=True)
+
+    joblib.dump(model, "Laptop_Price_Predictor/models/laptop_price_model.pkl")
+
+    print("\nModel saved successfully!")
+    print("Path: Laptop_Price_Predictor/models/laptop_price_model.pkl")
+
+
 def main():
     df = load_data()
     data_overview(df)
@@ -103,6 +114,7 @@ def main():
     model, y_pred = train_model(X_train, X_test, Y_train)
 
     model_evaluation(Y_test, y_pred)
+    save_model(model)
 
 
 if __name__ == "__main__":
