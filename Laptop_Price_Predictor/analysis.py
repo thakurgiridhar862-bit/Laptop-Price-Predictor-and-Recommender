@@ -33,11 +33,30 @@ def data_overview(df):
     print(df.describe())
 
 
+def clean_data(df):
+
+    print("\n DATA CLEANING")
+    print("-" * 50)
+
+    df = df.rename(columns={"Storage type": "Storage_Type"})
+    df = df.rename(columns={"Final Price": "Price_Euro"})
+    df["Storage_Type"] = df["Storage_Type"].fillna(df["Storage_Type"].mode()[0])
+    df["GPU"] = df["GPU"].fillna("Unknown")
+    print("Data Cleaning Completed Successfully")
+    print("-" * 50)
+    print(f"After Cleaning Total Duplicate Values : {df.duplicated().sum()}")
+
+    print("\nAFTER CLEANING MISSING VALUES ")
+    print("-" * 50)
+    print(df.isnull().sum())
+
+    return df
+
+
 def main():
     df = load_data()
-
     data_overview(df)
-    df = df.rename(columns={"Final Price": "Price_Euro"})
+    df = clean_data(df)
 
 
 if __name__ == "__main__":
