@@ -182,6 +182,46 @@ def Ram_analysis(df):
     )
 
 
+def storage_analysis(df):
+
+    print("\nSTORAGE Type ANALYSIS")
+    print("-" * 50)
+
+    print(f"Total Storage Type Variants : {df['Storage_Type'].nunique()}")
+    print("Storage Type counts")
+    print("-" * 50)
+    storage_count = df["Storage_Type"].value_counts()
+    print(storage_count)
+    avg_storage_price = (
+        df.groupby("Storage_Type")["Price_Euro"]
+        .mean()
+        .round(2)
+        .sort_values(ascending=False)
+    )
+    print("Average Price by Storage Type")
+    print("-" * 50)
+    print(avg_storage_price)
+    plt.figure(figsize=(16, 5))
+    plt.title("Average Laptop Price by Storage Type")
+    plt.xlabel("Storage Type")
+    plt.ylabel("Average Price (Euro)")
+    plt.grid(axis="y", alpha=0.3)
+    X = avg_storage_price.index
+    Y = avg_storage_price.values
+    ax = sns.barplot(
+        x=X,
+        y=Y,
+        palette="viridis",
+    )
+    for i in ax.containers:
+        ax.bar_label(i, padding=5)
+    plt.savefig(
+        "Laptop_Price_Predictor/graphs/average_price_by_storage_type.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+
+
 def main():
     df = load_data()
     data_overview(df)
@@ -189,6 +229,7 @@ def main():
     price_dist(df)
     brand_analysis(df)
     Ram_analysis(df)
+    storage_analysis(df)
 
 
 if __name__ == "__main__":
