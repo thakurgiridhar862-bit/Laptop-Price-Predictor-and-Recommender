@@ -1,5 +1,8 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from sklearn.linear_model import LinearRegression
 
 
 def load_data():
@@ -61,12 +64,45 @@ def tts(X, Y):
     return X_train, X_test, Y_train, Y_test
 
 
+def train_model(X_train, X_test, y_train):
+    lr = LinearRegression()
+
+    lr.fit(X_train, y_train)
+
+    y_pred = lr.predict(X_test)
+
+    print("\nMODEL TRAINING COMPLETED")
+    print("-" * 50)
+    print("First 10 Predictions:")
+    print(y_pred[:10])
+
+    return lr, y_pred
+
+
+def model_evaluation(y_test, y_pred):
+    mae = mean_absolute_error(y_test, y_pred)
+    mse = mean_squared_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+    r2 = r2_score(y_test, y_pred)
+
+    print("\nMODEL EVALUATION")
+    print("-" * 50)
+    print(f"MAE  : {mae:.2f}")
+    print(f"MSE  : {mse:.2f}")
+    print(f"RMSE : {rmse:.2f}")
+    print(f"R2   : {r2:.4f}")
+
+
 def main():
     df = load_data()
     data_overview(df)
     X, Y = feature_selection(df)
     X = encoding(X)
+    X["Screen"] = X["Screen"].fillna(X["Screen"].median())
     X_train, X_test, Y_train, Y_test = tts(X, Y)
+    model, y_pred = train_model(X_train, X_test, Y_train)
+
+    model_evaluation(Y_test, y_pred)
 
 
 if __name__ == "__main__":
