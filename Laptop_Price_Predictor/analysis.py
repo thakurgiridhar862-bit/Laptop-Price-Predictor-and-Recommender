@@ -336,6 +336,11 @@ def touchscreen_analysis(df):
     )
 
 
+def save_cleaned_data(df):
+    df.to_csv("Laptop_Price_Predictor/data/cleaned_laptop_data.csv", index=False)
+    print("\nCleaned dataset saved successfully!")
+
+
 def main():
     df = load_data()
     data_overview(df)
@@ -347,6 +352,7 @@ def main():
     cpu_analysis(df)
     gpu_analysis(df)
     touchscreen_analysis(df)
+    save_cleaned_data(df)
 
 
 if __name__ == "__main__":
