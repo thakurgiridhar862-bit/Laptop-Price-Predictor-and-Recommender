@@ -300,6 +300,42 @@ def gpu_analysis(df):
     )
 
 
+def touchscreen_analysis(df):
+
+    print("\nTOUCHSCREEN ANALYSIS")
+    print("-" * 50)
+
+    print("Touchscreen Counts")
+    print("-" * 50)
+
+    touch_count = df["Touch"].value_counts()
+    print(touch_count)
+
+    plt.figure(figsize=(8, 5))
+    plt.title("Touchscreen vs Non-Touchscreen Laptops")
+    plt.xlabel("Touchscreen")
+    plt.ylabel("Number of Laptops")
+    plt.grid(axis="y", alpha=0.3)
+
+    X = touch_count.index
+    Y = touch_count.values
+
+    ax = sns.barplot(
+        x=X,
+        y=Y,
+        palette="Pastel1",
+    )
+
+    for container in ax.containers:
+        ax.bar_label(container, padding=5)
+
+    plt.savefig(
+        "Laptop_Price_Predictor/graphs/touchscreen_distribution.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+
+
 def main():
     df = load_data()
     data_overview(df)
@@ -310,6 +346,7 @@ def main():
     storage_analysis(df)
     cpu_analysis(df)
     gpu_analysis(df)
+    touchscreen_analysis(df)
 
 
 if __name__ == "__main__":
