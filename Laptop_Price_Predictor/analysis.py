@@ -84,8 +84,6 @@ def price_dist(df):
     plt.savefig(
         "Laptop_Price_Predictor/graphs/price_dist.png", dpi=300, bbox_inches="tight"
     )
-    plt.show()
-    plt.close()
 
 
 def brand_analysis(df):
@@ -118,8 +116,6 @@ def brand_analysis(df):
     plt.savefig(
         "Laptop_Price_Predictor/graphs/top10_brands.png", dpi=300, bbox_inches="tight"
     )
-    plt.show()
-    plt.close()
 
     avg_brand_price = (
         df.groupby("Brand")["Price_Euro"].mean().round(2).sort_values(ascending=False)
@@ -147,8 +143,43 @@ def brand_analysis(df):
         dpi=300,
         bbox_inches="tight",
     )
-    plt.show()
-    plt.close()
+
+
+def Ram_analysis(df):
+
+    print("\nRAM ANALYSIS")
+    print("-" * 50)
+
+    print(f"Total RAM Variants : {df['RAM'].nunique()}")
+    print("RAM counts")
+    print("-" * 50)
+    ram_count = df["RAM"].value_counts()
+    print(ram_count)
+    avg_ram_price = (
+        df.groupby("RAM")["Price_Euro"].mean().round(2).sort_values(ascending=False)
+    )
+    print("Average Price by RAM")
+    print("-" * 50)
+    print(avg_ram_price)
+    plt.figure(figsize=(16, 5))
+    plt.title("Average Laptop Price by RAM")
+    plt.xlabel("RAM (GB)")
+    plt.ylabel("Average Price (Euro)")
+    plt.grid(axis="y", alpha=0.3)
+    X = avg_ram_price.index
+    Y = avg_ram_price.values
+    ax = sns.barplot(
+        x=X,
+        y=Y,
+        palette="magma",
+    )
+    for i in ax.containers:
+        ax.bar_label(i, padding=5)
+    plt.savefig(
+        "Laptop_Price_Predictor/graphs/average_price_by_ram.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
 
 
 def main():
@@ -157,6 +188,7 @@ def main():
     df = clean_data(df)
     price_dist(df)
     brand_analysis(df)
+    Ram_analysis(df)
 
 
 if __name__ == "__main__":
