@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 def load_data():
@@ -53,10 +55,44 @@ def clean_data(df):
     return df
 
 
+def price_dist(df):
+    print("\nPRICE DISTRIBUTION")
+    print("-" * 50)
+
+    print(f"Maximum Price (in Euros) : €{df['Price_Euro'].max()}")
+    print(f"Minimum Price (in Euros) : €{df['Price_Euro'].min()}")
+    print(f"Average Price (in Euros) : €{df['Price_Euro'].mean().round()}")
+    print(f"Median Price (in Euros)  : €{df['Price_Euro'].median().round(2)}")
+
+    mean_price = df["Price_Euro"].mean().round(2)
+    median_price = df["Price_Euro"].median().round(2)
+    plt.figure(figsize=(10, 6))
+    plt.grid(axis="y", alpha=0.3)
+    plt.title("Distribution of Laptop Prices")
+    plt.xlabel("Price (Euro)")
+    plt.ylabel("Number of Laptops")
+    sns.histplot(df, x="Price_Euro", bins=25)
+    plt.axvline(
+        x=mean_price, color="red", linestyle="--", linewidth=2, label="Mean Price"
+    )
+
+    plt.axvline(
+        x=median_price, color="green", linestyle="--", linewidth=2, label="Median Price"
+    )
+
+    plt.legend()
+    plt.savefig(
+        "Laptop_Price_Predictor/graphs/price_dist.png", dpi=300, bbox_inches="tight"
+    )
+    plt.show()
+    plt.close()
+
+
 def main():
     df = load_data()
     data_overview(df)
     df = clean_data(df)
+    price_dist(df)
 
 
 if __name__ == "__main__":
