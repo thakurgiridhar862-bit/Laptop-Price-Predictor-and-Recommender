@@ -61,6 +61,17 @@ def storage_filter(rec_df, storage):
     return fil_df
 
 
+def brand_filter(rec_df, brand):
+    fil_df = rec_df[rec_df["Brand"] == brand]
+
+    print("\nBrand Filter Applied")
+    print("-" * 50)
+    print(f"Preffered Brand : {brand} GB")
+    print(f"Matching Laptops  : {fil_df.shape[0]}")
+
+    return fil_df
+
+
 def main():
     df = load_data()
     df = currency_conversion(df)
@@ -68,6 +79,7 @@ def main():
     rec_df = budget_filter(df, budget)
     rec_df = ram_filter(rec_df, ram)
     rec_df = storage_filter(rec_df, storage)
+    rec_df = brand_filter(rec_df, brand)
 
 
 if __name__ == "__main__":
