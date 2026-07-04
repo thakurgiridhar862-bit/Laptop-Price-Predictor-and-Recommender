@@ -13,6 +13,7 @@ st.sidebar.title("About Project")
 st.sidebar.write(
     "This project predicts laptop prices using a trained Multiple Linear Regression model."
 )
+st.subheader("Selected Configuration")
 st.sidebar.write("Model Score: R2 = 0.8205")
 st.sidebar.write("Currency: Euro and INR")
 st.sidebar.write("Dataset: 2160 laptop records")
@@ -75,7 +76,7 @@ st.dataframe(input_data, use_container_width=True)
 input_encoded = pd.get_dummies(input_data, drop_first=True)
 input_encoded = input_encoded.reindex(columns=model_columns, fill_value=0)
 
-euro_to_inr = 90
+euro_to_inr = 110
 
 predict_button = st.button("Predict Laptop Price")
 
