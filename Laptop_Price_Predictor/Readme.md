@@ -190,6 +190,10 @@ Streamlit Application
 
 ---
 
+## Live Demo
+
+https://laptop-price-predictor-and-recommender.streamlit.app/
+
 ## 👨‍💻 Developer
 
 **Giridhar Jadon**
