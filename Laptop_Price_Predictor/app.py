@@ -14,7 +14,16 @@ st.sidebar.write(
     "This project predicts laptop prices using a trained Multiple Linear Regression model."
 )
 st.sidebar.write("Model Score: R2 = 0.8205")
-st.sidebar.write("Currency conversion used: 1 Euro = 90 INR")
+st.sidebar.write("Currency: Euro and INR")
+st.sidebar.write("Dataset: 2160 laptop records")
+st.sidebar.write("Model: Multiple Linear Regression")
+
+st.sidebar.subheader("Project Steps")
+st.sidebar.write("Data Cleaning")
+st.sidebar.write("EDA")
+st.sidebar.write("Model Training")
+st.sidebar.write("Scratch Model")
+st.sidebar.write("Streamlit App")
 
 st.title("Laptop Price Predictor")
 st.write(
